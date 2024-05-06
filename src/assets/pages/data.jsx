@@ -8,6 +8,9 @@ import { Link, useParams } from 'react-router-dom';
 import Modal from 'react-bootstrap/Modal';
 import Card from 'react-bootstrap/Card';
 
+import Form from 'react-bootstrap/Form';
+import Col from 'react-bootstrap/Col';
+
 export const Data = () => {
 
     const [show, setShow] = useState(false);
@@ -23,7 +26,9 @@ export const Data = () => {
 
     const { id } = useParams();
     const [record, setRecord] = useState((JSON.parse(localStorage.getItem('prdata'))) || []);
+    const [filter, setFilter] = useState([])
 
+    let data = filter.length > 0 ? filter : record;
 
     const DeleteData = (id) => {
         console.log(id);
@@ -32,11 +37,35 @@ export const Data = () => {
         setRecord(del);
     }
 
+    const searchevnt=(e)=>{
+        console.log(e);
+        let src = record.filter((item)=>{
+            
+                return item.name.toLowerCase().includes(e.toLowerCase())
+            
+        });
+
+        setFilter(src)
+    }
+
     return (
         <>
             <Header />
             <Container>
                 <Row>
+                    <Form inline>
+                        <Row>
+                            <Col xs="auto">
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Search"
+                                    className=" mr-sm-2"
+                                    onChange={(e)=> searchevnt(e.target.value)}
+                                />
+                            </Col>
+                            
+                        </Row>
+                    </Form>
                     <Table striped bordered hover variant="dark">
                         <thead>
                             <tr>
@@ -50,7 +79,7 @@ export const Data = () => {
                         </thead>
                         <tbody>
                             {
-                                record.map((val, i) => {
+                                data.map((val, i) => {
                                     i++
                                     return (
                                         <tr key={val.id}>
@@ -101,7 +130,7 @@ export const Data = () => {
                     <Button variant="secondary" onClick={handleClose}>
                         Close
                     </Button>
-                    
+
                 </Modal.Footer>
             </Modal>
         </>
