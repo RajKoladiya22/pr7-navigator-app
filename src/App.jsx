@@ -1,5 +1,6 @@
 import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/js/bootstrap.bundle.js'
 import { Header } from './assets/components/header'
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import { Data } from './assets/pages/data'
@@ -14,6 +15,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Data/>}></Route>
         <Route path='/add' element={<Add/>}></Route>
+        <Route path='/add/:id' element={<Add/>}></Route>
       </Routes>
       </BrowserRouter>
     </>
