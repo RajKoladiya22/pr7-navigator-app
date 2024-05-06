@@ -6,6 +6,7 @@ import { Link, useParams } from 'react-router-dom';
 
 // import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import Card from 'react-bootstrap/Card';
 
 export const Data = () => {
 
@@ -59,7 +60,7 @@ export const Data = () => {
                                             <td>{val.desc}</td>
                                             <td>{val.category}</td>
                                             <td>
-                                                <Button variant="primary" onClick={()=>handleShow(val.id)}>&#x2637; Read</Button>
+                                                <Button variant="primary" onClick={() => handleShow(val.id)}>&#x2637; Read</Button>
                                                 <Button as={Link} variant="success" className='mx-2' to={`/add/${val.id}`}>&#9998; Edit</Button>
                                                 <Button variant="danger" onClick={() => DeleteData(val.id)}>&#10005; Delete</Button>
                                             </td>
@@ -75,19 +76,32 @@ export const Data = () => {
             </Container>
 
 
-            
-            <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title className='text-bg-dark'></Modal.Title>
+
+            <Modal show={show} onHide={handleClose} className='bg-dark'>
+                <Modal.Header closeButton >
+                    <Modal.Title className='text-dark'>Details</Modal.Title>
                 </Modal.Header>
-                <Modal.Body className='text-dark'>{read.name}</Modal.Body>
+                <Modal.Body className=''>
+
+                    <Card style={{ width: '18rem' }} className='bg-dark text-white'>
+                        <Card.Body>
+
+                            <Card.Text>
+                                <p>Name: {read.name}</p>
+                                <p>Price: {read.price}</p>
+                                <p>Description: {read.desc}</p>
+                                <p>Categoyr: {read.category}</p>
+                            </Card.Text>
+                            <Button as={Link} variant="success" to={`/add/${read.id}`}>&#9998; Edit</Button>
+                        </Card.Body>
+                    </Card>
+
+                </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={handleClose}>
-                        Save Changes
-                    </Button>
+                    
                 </Modal.Footer>
             </Modal>
         </>
